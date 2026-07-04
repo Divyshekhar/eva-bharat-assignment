@@ -244,7 +244,7 @@ Authorization: Bearer <jwt_token>
 
 ## Database
 
-This project uses **PostgreSQL** as the persistent data store and **GORM** as the ORM.
+This project uses **SQLite** as the persistent data store and **GORM** as the ORM.
 
 ---
 
