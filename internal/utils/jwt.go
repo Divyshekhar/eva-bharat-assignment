@@ -13,15 +13,23 @@ func GenerateToken(userId uuid.UUID) (string, error) {
 		"user_id": userId.String(),
 		"exp":     time.Now().Add(24 * time.Hour).Unix(),
 	}
+	secret := os.Getenv("JWT_SECRET")
+	if secret == ""{
+		secret = "development-secret-change-in-production"
+	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+	return token.SignedString([]byte(secret))
 }
 func ValidateToken(tokenString string) (jwt.MapClaims, error){
+	secret := os.Getenv("JWT_SECRET")
+	if secret == ""{
+		secret = "development-secret-change-in-production"
+	}
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token)(interface{}, error){
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, jwt.ErrSignatureInvalid
 		}
-		return []byte(os.Getenv("JWT_SECRET")), nil
+		return []byte(secret), nil
 	})
 	if err != nil {
 		return nil, err

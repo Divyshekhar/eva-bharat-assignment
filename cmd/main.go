@@ -39,6 +39,10 @@ func main() {
 		AuthHandler: authHandler,
 		TicketHandler: ticketHandler,
 	})
+	port := os.Getenv("PORT")
+	if port == ""{
+		port = "8080"
+	}
 
-	log.Fatal(router.Run(":" + os.Getenv("PORT")))
+	log.Fatal(router.Run(":" + port))
 }

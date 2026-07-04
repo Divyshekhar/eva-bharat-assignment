@@ -12,7 +12,10 @@ RUN go mod download
 COPY . .
 
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ticket-system ./cmd/main.go
+# RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ticket-system ./cmd/main.go
+RUN apk add --no-cache gcc musl-dev
+
+RUN go build -o ticket-system ./cmd/main.go
 
 
 
