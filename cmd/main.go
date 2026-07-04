@@ -24,9 +24,14 @@ func main() {
 	authService := services.NewAuthService(userRepo)
 	authHandler := handlers.NewAuthHandler(authService)
 
+	ticketRepo := repository.NewTicketRepository(config.DB)
+	ticketService := services.NewTicketService(ticketRepo)
+	ticketHandler := handlers.NewTicketHandler(ticketService)
+
 	router := gin.Default()
 
 	routes.RegisterRoutes(router, &routes.Handlers{AuthHandler: authHandler})
+	routes.RegisterRoutes(router, &routes.Handlers{TicketHandler: ticketHandler})
 
 	log.Fatal(router.Run(":" + os.Getenv("PORT")))
 }

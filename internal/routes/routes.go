@@ -9,6 +9,7 @@ import (
 
 type Handlers struct {
 	AuthHandler *handlers.AuthHandler
+	TicketHandler *handlers.TicketHandler
 }
 
 func RegisterRoutes(router *gin.Engine, h *Handlers){
@@ -18,4 +19,5 @@ func RegisterRoutes(router *gin.Engine, h *Handlers){
 		})
 	})
 	RegisterAuthRoutes(router, h.AuthHandler)
+	RegisterTicketRoutes(router, h.TicketHandler)
 }
