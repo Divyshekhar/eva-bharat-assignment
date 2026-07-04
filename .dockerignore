@@ -1,0 +1,17 @@
+.git
+.gitignore
+
+.vscode
+.idea
+
+tmp
+bin
+
+*.log
+
+README.md
+
+.env
+.env.local
+
+air.toml
