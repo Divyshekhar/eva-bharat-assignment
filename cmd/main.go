@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/Divyshekhar/eva-bharat-assignment/internal/config"
@@ -29,9 +30,15 @@ func main() {
 	ticketHandler := handlers.NewTicketHandler(ticketService)
 
 	router := gin.Default()
-
-	routes.RegisterRoutes(router, &routes.Handlers{AuthHandler: authHandler})
-	routes.RegisterRoutes(router, &routes.Handlers{TicketHandler: ticketHandler})
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "ok",
+		})
+	})
+	routes.RegisterRoutes(router, &routes.Handlers{
+		AuthHandler: authHandler,
+		TicketHandler: ticketHandler,
+	})
 
 	log.Fatal(router.Run(":" + os.Getenv("PORT")))
 }
